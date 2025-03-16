@@ -28,6 +28,7 @@ def render_sign_page():
         email = request.form.get('user_email').lower().strip()
         password = request.form.get('user_password')
         password2 = request.form.get('user_password2')
+        user_class = request.form.get('user_role')  # Retrieve selected role
 
         if password != password2:
             return redirect("/sign?error=passwords+do+not+match")
@@ -38,8 +39,8 @@ def render_sign_page():
         con = connect_database(DATABASE)
         if con:
             cur = con.cursor()
-            query_insert = "INSERT INTO user (first_name, last_name, email, password) VALUES (?, ?, ?, ?)"
-            cur.execute(query_insert, (fname, lname, email, password))
+            query_insert = "INSERT INTO user (first_name, last_name, email, password, class) VALUES (?, ?, ?, ?, ?)"
+            cur.execute(query_insert, (fname, lname, email, password, user_class))
             con.commit()
             con.close()
             return redirect("/login")  # Redirect to login page after signing up
