@@ -13,6 +13,12 @@
 <body>
 <nav>
     <div class="container">
+
+
+        <div class="title-links">
+        <img class = "center" src="/static/images/logo.svg" width="200" height="50" alt="Header graphic">
+        </div>
+
         <div class="sign-login">
 
              {% if user %}
@@ -24,21 +30,17 @@
          </div>
 
         <div class="navbar-links">
-            <a href="/">home</a>
+            <a href="/">Home</a>
 
 
-            <a href="/sessions">sessions</a>
+            <a href="/sessions">Sessions</a>
 
         </div>
 
 
     </div>
 </nav>
-<div class="container">
-    <header>
-        <h1>Mini Project</h1>
-        <h2>{% block pageheading %}{% endblock %}</h2>
-    </header>
+
 
     <main>
         {% block main %}
