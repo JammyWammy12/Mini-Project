@@ -5,9 +5,12 @@
     box-sizing: border-box;
 }
 
+
 body {
-    background-color: rgba(236, 240, 241, 1.0);
+  background-image: url('/static/images/background.webp');
+  background-color: #cccccc;
 }
+
 
 .container {
     width: 60vw;
@@ -40,7 +43,7 @@ h2 {
 }
 
 nav {
-    background-color: rgba(44, 62, 80, 1.0); /* darkest blue */
+    background-color: rgba(70, 130, 180, 1.0); /* darkest blue */
     text-align: center;
     /*color: rgba(52, 152, 219, 1.0);!*light blue*!*/
     font-size: 1.5rem;
@@ -60,8 +63,10 @@ nav {
 
 .navbar-links {
     display: inline;
-    float: left;
+    float: right;
 }
+
+
 
 nav a {
     /*margin:0 0.5rem;*/

@@ -13,20 +13,25 @@
 <body>
 <nav>
     <div class="container">
+        <div class="sign-login">
 
+             {% if user %}
+                 <a href="/logout">Sign Out</a>
+            {% else %}
+                 <a href="/login">Login</a>
+             {% endif %}
+
+         </div>
 
         <div class="navbar-links">
             <a href="/">home</a>
 
 
-            <a href="/about">about</a>
+            <a href="/sessions">sessions</a>
+
         </div>
 
-         <div class="sign-login">
-             <a href="/login">login</a>
 
-
-         </div>
     </div>
 </nav>
 <div class="container">

@@ -18,7 +18,20 @@ def connect_database(db_file):
 
 @app.route('/')
 def render_homepage():
-    return render_template('home.html')
+    user = None
+    if 'user_id' in session:
+        con = connect_database(DATABASE)
+        if con:
+            cur = con.cursor()
+            query = "SELECT first_name, last_name FROM user WHERE user_id = ?"
+            cur.execute(query, (session['user_id'],))
+            user = cur.fetchone()
+            con.close()
+
+             # Extract first_name from tuple
+
+    return render_template('home.html', user=user)
+
 
 @app.route('/sign', methods=['POST', 'GET'])
 def render_sign_page():
@@ -68,6 +81,9 @@ def render_login_page():
                 if user_info[2] == password:
                     session['user_id'] = user_info[1]
                     session['email'] = user_info[0]
+
+
+
                     return redirect("/")
 
         return redirect("/login?error=invalid+credentials")
@@ -75,6 +91,30 @@ def render_login_page():
     return render_template('login.html')
 
 
-@app.route('/about')
-def render_about_page():
-    return render_template('about.html')
+@app.route('/sessions')
+def render_sessions_page():
+    if 'user_id' not in session:
+        return redirect("/login?error=please+log+in")
+
+    user_id = session['user_id']
+
+    con = connect_database(DATABASE)
+    if con:
+        cur = con.cursor()
+        query = "SELECT first_name, last_name FROM user WHERE user_id = ?"
+        cur.execute(query, (user_id,))
+        user = cur.fetchone()
+        con.close()
+
+        if user:
+            return render_template('sessions.html', first_name=user[0], last_name=user[1])
+
+    return redirect("/login?error=user+not+found")
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/login?message=logged+out')
+
+
