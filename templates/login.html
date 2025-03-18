@@ -3,7 +3,8 @@
 {% block pageheading %}Login{% endblock %}
 
 {% block main %}
-    <form class = "myform" method="post">
+    <div class="box">
+        <form class = "myform" method="post">
         <div class = "form-group">
             <div class = "form-label"> Email: </div>
             <div class = "form-element"> <input type = "email" name = "user_email"> </div>
@@ -19,8 +20,15 @@
             <div class = "form-element"> <input type = "submit" value="Submit"> </div>
         </div>
     </form>
+
+    </div>
+
     <br>
     <br>
     <br>
-    <p>Don't have an account? Click Here! <a href=/sign>Sign Up!</a></p>
+    <div class="sign-up">
+         <p>Don't have an account? Click Here! <a href=/sign>Sign Up!</a></p>
+
+    </div>
+
 {% endblock %}

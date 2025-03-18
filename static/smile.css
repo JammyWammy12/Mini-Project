@@ -15,6 +15,7 @@
 
     .container {
         margin: auto;
+        font-size: 40px;
 
 
 
@@ -94,7 +95,8 @@
     }
 
     a, a:visited {
-        color: rgba(52, 152, 219, 1.0);
+        color: white;
+
         /*color:hotpink;*/
         text-decoration: none;
     }
@@ -159,20 +161,47 @@
         margin: auto;
         padding-top: 3rem;
     }
+    .box {
+
+        width: 300px;
+        height: 500px;
+        border: 2px solid green;
+        padding: 12px;
+        margin-left: 700px;
+        margin-right: auto;
+    }
+
+
+
+
 
     .form-group {
         padding-top: 3rem;
+
+
     }
 
     .form-label {
-        width: 30%;
-        float: left;
+        width: 78%;
+        text-align: center;
         padding: 0.3rem;
+
     }
 
     .form-element {
-        width: 70%;
-        float: left;
+        width: 30%;
+        margin-left: auto;
+        margin-right: auto;
+
+
+        width: 25em
+    }
+
+
+
+
+    .sign-up {
+        text-align: center;
     }
 
     .button-group {
@@ -185,7 +214,7 @@
     }
 
     .form-group input {
-        padding: 0.3rem;
+        padding: 0.10rem;
         width: 100%;
     }
 
@@ -211,6 +240,7 @@
     @media only screen and (max-width: 600px) {
         .container {
             width: 100%;
+
         }
 
         .product-box {
