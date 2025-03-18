@@ -91,26 +91,30 @@ def render_login_page():
     return render_template('login.html')
 
 
-@app.route('/sessions')
+
+
+@app.route('/sessions', methods=['POST', 'GET'])
 def render_sessions_page():
-    if 'user_id' not in session:
-        return redirect("/login?error=please+log+in")
+    if request.method == 'POST':
+        name = request.form.get('name1').title().strip()
+        subject = request.form.get('subject').title().strip()
+        date = request.form.get('date').title().strip()
 
-    user_id = session['user_id']
 
-    con = connect_database(DATABASE)
-    if con:
-        cur = con.cursor()
-        query = "SELECT first_name, last_name FROM user WHERE user_id = ?"
-        cur.execute(query, (user_id,))
-        user = cur.fetchone()
-        con.close()
 
-        if user:
-            return render_template('sessions.html', first_name=user[0], last_name=user[1])
+        con = connect_database(DATABASE)
+        if con:
+            cur = con.cursor()
+            query_insert = "INSERT INTO sessions (name, date, subject) VALUES (?, ?, ?)"
+            cur.execute(query_insert, (name, date, subject))
+            con.commit()
+            con.close()
+            return redirect("/sessions")
 
-    return redirect("/login?error=user+not+found")
 
+
+
+    return render_template('sessions.html')
 
 @app.route('/logout')
 def logout():
