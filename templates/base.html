@@ -21,7 +21,7 @@
 
         <div class="sign-login">
 
-             {% if user %}
+             {% if logged_in == True %}
                  <a href="/logout">Sign Out</a>
             {% else %}
                  <a href="/login">Login</a>

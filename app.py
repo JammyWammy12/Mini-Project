@@ -1,12 +1,23 @@
 from flask import Flask, render_template, request, redirect, session
 import sqlite3
 from sqlite3 import Error
-import os
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 app.secret_key = 'super secret key'
 
 DATABASE = 'project1'
+bcrypt = Bcrypt(app)
+
+
+def is_logged_in():
+    if (session["use_id"] == None):
+        print("Not logged in!")
+        return False
+    else:
+        print("Logged in broski!")
+        return True
+
 
 def connect_database(db_file):
     try:
@@ -49,11 +60,15 @@ def render_sign_page():
         if len(password) < 8:
             return redirect("/sign?error=password+must+be+8+long")
 
+        hashed_password = bcrypt.generate_password_hash(password)
+
+
+
         con = connect_database(DATABASE)
         if con:
             cur = con.cursor()
             query_insert = "INSERT INTO user (first_name, last_name, email, password, class) VALUES (?, ?, ?, ?, ?)"
-            cur.execute(query_insert, (fname, lname, email, password, user_class))
+            cur.execute(query_insert, (fname, lname, email, hashed_password,password, user_class))
             con.commit()
             con.close()
             return redirect("/login")  # Redirect to login page after signing up
@@ -64,6 +79,7 @@ def render_sign_page():
 
 @app.route('/login', methods=['POST', 'GET'])
 def render_login_page():
+
     if request.method == 'POST':
         email = request.form.get('user_email').lower().strip()
         password = request.form.get('user_password')
@@ -81,6 +97,7 @@ def render_login_page():
                 if user_info[2] == password:
                     session['user_id'] = user_info[1]
                     session['email'] = user_info[0]
+                    print(session)
 
 
 
@@ -88,7 +105,7 @@ def render_login_page():
 
         return redirect("/login?error=invalid+credentials")
 
-    return render_template('login.html')
+    return render_template('login.html', logged_in=is_logged_in())
 
 
 
