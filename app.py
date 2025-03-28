@@ -11,7 +11,7 @@ bcrypt = Bcrypt(app)
 
 
 def is_logged_in():
-    if (session["use_id"] == None):
+    if (session.get('user_id') is None):
         print("Not logged in!")
         return False
     else:
@@ -41,7 +41,7 @@ def render_homepage():
 
              # Extract first_name from tuple
 
-    return render_template('home.html', user=user)
+    return render_template('home.html', user=user, logged_in=is_logged_in())
 
 
 @app.route('/sign', methods=['POST', 'GET'])
@@ -68,7 +68,7 @@ def render_sign_page():
         if con:
             cur = con.cursor()
             query_insert = "INSERT INTO user (first_name, last_name, email, password, class) VALUES (?, ?, ?, ?, ?)"
-            cur.execute(query_insert, (fname, lname, email, hashed_password,password, user_class))
+            cur.execute(query_insert, (fname, lname, email, hashed_password,user_class))
             con.commit()
             con.close()
             return redirect("/login")  # Redirect to login page after signing up
@@ -131,7 +131,7 @@ def render_sessions_page():
 
 
 
-    return render_template('sessions.html')
+    return render_template('sessions.html', logged_in=is_logged_in())
 
 @app.route('/logout')
 def logout():
